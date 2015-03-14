@@ -16,6 +16,9 @@
   <div class="team">
     <div class="name">{{team.name}} </div>
     <div class='seed'>{{team.seed}}</div>
+    <button {{action 'selectTeam' team}} class="btn">
+      Select
+    </button>
   </div>
   {{/each}}
 </div>

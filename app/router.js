@@ -7,7 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('login');
-  this.route('pick-teams');
+  this.route('select-teams');
 });
 
 export default Router;

@@ -14,7 +14,7 @@ let teams = [
   {id: 4, name: 'UNC', seed: 16}
 ];
 
-module('Acceptance: PickTeams', {
+module('Acceptance: SelectTeams', {
   beforeEach: function() {
     application = startApp();
   },
@@ -24,9 +24,9 @@ module('Acceptance: PickTeams', {
   }
 });
 
-test('visiting /pick-teams with no teams', function(assert) {
+test('visiting /select-teams with no teams', function(assert) {
   // 2 per team + 5 element assertions + 1 assertion for ajax
-  assert.expect(teams.length*2 + 5 + 1);
+  assert.expect(teams.length*3 + 5 + 1);
   let userData = {id: 1, name: 'bob', teams: [] };
 
   stubRequest('get', 'teams', function(request){
@@ -35,10 +35,10 @@ test('visiting /pick-teams with no teams', function(assert) {
   });
 
   signIn(userData);
-  visit('/pick-teams');
+  visit('/select-teams');
 
   andThen(function() {
-    assert.equal(currentPath(), 'pick-teams');
+    assert.equal(currentPath(), 'select-teams');
 
     // 3 empty slots
     expectElement('.selected-teams .team.empty:eq(0)');
@@ -53,11 +53,13 @@ test('visiting /pick-teams with no teams', function(assert) {
                  `team div contains name ${team.name}`);
       assert.ok( teamDiv.find(`.seed:contains(${team.seed})`).length,
                  `team div contains seed ${team.seed}`);
+      assert.ok( teamDiv.find(`.btn:contains(Select)`).length,
+                 `has select button for team @ ${index}`);
     });
   });
 });
 
-test('visiting /pick-teams shows users selected teams', function(assert) {
+test('visiting /select-teams shows users selected teams', function(assert) {
   let userTeams = teams.slice(0,3);
   let userTeamIds = userTeams.map( (t) => t.id );
   let userData = {
@@ -71,7 +73,7 @@ test('visiting /pick-teams shows users selected teams', function(assert) {
   });
 
   signIn(userData);
-  visit('/pick-teams');
+  visit('/select-teams');
 
   andThen(function() {
     for (let i=0; i<userTeams.length; i++) {
@@ -82,8 +84,7 @@ test('visiting /pick-teams shows users selected teams', function(assert) {
   });
 });
 
-/*
-test('visiting /pick-teams with none selecting and picking', function(assert){
+test('visiting /select-teams with none selected and selecting', function(assert){
   let userData = {
     id: 1,
     name: 'bob',
@@ -94,8 +95,19 @@ test('visiting /pick-teams with none selecting and picking', function(assert){
     return this.success({teams});
   });
 
-  signIn(userData);
-  visit('/pick-teams');
+  let findTeamSlot = (index) => find(`.selected-teams .team:eq(${index})`);
 
+  signIn(userData);
+  visit('/select-teams');
+  andThen( () => {
+    assert.ok(findTeamSlot(0).hasClass('empty'),
+              'precond: selected team idx 0 is empty');
+    click('.teams .team:eq(0) .btn:contains(Select)');
+  });
+  andThen( () => {
+    assert.ok(!findTeamSlot(0).hasClass('empty'),
+              'selected team idx 0 is not empty');
+    assert.ok(findTeamSlot(0).find(`.name:contains(${teams[0].name})`).length,
+              'selected team slot 0 has selected team');
+  });
 });
-*/

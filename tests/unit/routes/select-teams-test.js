@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('route:pick-teams', {
+moduleFor('route:select-teams', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });
