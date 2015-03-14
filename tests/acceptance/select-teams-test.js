@@ -15,6 +15,13 @@ let teams = [
   {id: 4, name: 'UNC', seed: 16}
 ];
 
+let makeUser = (userData) => {
+  let defaultUserData = {
+    id: 1, name: 'bob', canSelectTeams: true, teams: []
+  };
+  return Ember.$.extend(true, defaultUserData, userData);
+};
+
 module('Acceptance: SelectTeams', {
   beforeEach: function() {
     application = startApp();
@@ -28,7 +35,7 @@ module('Acceptance: SelectTeams', {
 test('visiting /select-teams with no teams', function(assert) {
   // 2 per team + 5 element assertions + 1 assertion for ajax
   assert.expect(teams.length*3 + 5 + 1);
-  let userData = {id: 1, name: 'bob', teams: [] };
+  let userData = makeUser({teams:[]});
 
   stubRequest('get', 'teams', function(request){
     assert.ok(true, 'gets teams');
@@ -62,11 +69,7 @@ test('visiting /select-teams with no teams', function(assert) {
 test('visiting /select-teams shows users selected teams', function(assert) {
   let userTeams = teams.slice(0,2);
   let userTeamIds = userTeams.map( (t) => t.id );
-  let userData = {
-    id: 1,
-    name: 'bob',
-    teams: userTeamIds
-  };
+  let userData = makeUser({teams:userTeamIds});
 
   stubRequest('get', 'teams', function(request){
     return this.success({teams});
@@ -103,11 +106,7 @@ test('visiting /select-teams shows users selected teams', function(assert) {
 test('visiting /select-teams when user has selected MAX_TEAMS teams', function(assert) {
   let userTeams = teams.slice(0,MAX_TEAMS);
   let userTeamIds = userTeams.map( (t) => t.id );
-  let userData = {
-    id: 1,
-    name: 'bob',
-    teams: userTeamIds
-  };
+  let userData = makeUser({teams:userTeamIds});
 
   stubRequest('get', 'teams', function(request){
     return this.success({teams});
@@ -127,11 +126,7 @@ test('visiting /select-teams when user has selected MAX_TEAMS teams', function(a
 });
 
 test('visiting /select-teams with none selected and selecting', function(assert){
-  let userData = {
-    id: 1,
-    name: 'bob',
-    teams: []
-  };
+  let userData = makeUser({teams:[]});
 
   stubRequest('get', 'teams', function(request){
     return this.success({teams});
@@ -176,5 +171,19 @@ test('visiting /select-teams with none selected and selecting', function(assert)
     assert.ok(updatedUserJSON, 'updated user');
     assert.deepEqual(updatedUserJSON.user.teams, [ ''+teams[0].id ],
                  'updates with team id');
+  });
+});
+
+test('visiting /select-teams when user cannot select redirects to index', function(assert){
+  let userData = makeUser({canSelectTeams:false});
+
+  stubRequest('get', 'teams', function(request){
+    return this.success({teams});
+  });
+
+  signIn(userData);
+  visit('/select-teams');
+  andThen( () => {
+    assert.equal(currentPath(), 'index');
   });
 });

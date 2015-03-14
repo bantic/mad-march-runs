@@ -11,5 +11,11 @@ export default Ember.Route.extend({
 
   setupController(controller, model) {
     controller.set('model', model); // teams
+  },
+
+  redirect() {
+    if (!this.get('session.currentUser.canSelectTeams')) {
+      this.transitionTo('index');
+    }
   }
 });
