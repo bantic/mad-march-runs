@@ -40,7 +40,6 @@ test('visiting /select-teams with no teams', function(assert) {
   andThen(function() {
     assert.equal(currentPath(), 'select-teams');
 
-    // 3 empty slots
     expectElement('.selected-teams .team.empty:eq(0)');
     expectElement('.selected-teams .team.empty:eq(1)');
     expectElement('.selected-teams .team.empty:eq(2)');
@@ -80,6 +79,7 @@ test('visiting /select-teams shows users selected teams', function(assert) {
       let team = userTeams[i];
       expectElement(`.selected-teams .team:eq(${i}) .name:contains(${team.name})`);
       expectElement(`.selected-teams .team:eq(${i}) .seed:contains(${team.seed})`);
+      expectElement(`.selected-teams .team:eq(${i}) .btn.remove`);
     }
   });
 });
@@ -109,5 +109,9 @@ test('visiting /select-teams with none selected and selecting', function(assert)
               'selected team idx 0 is not empty');
     assert.ok(findTeamSlot(0).find(`.name:contains(${teams[0].name})`).length,
               'selected team slot 0 has selected team');
+    click(findTeamSlot(0).find(`.btn.remove`));
+  });
+  andThen( () => {
+    assert.ok(findTeamSlot(0).hasClass('empty'));
   });
 });

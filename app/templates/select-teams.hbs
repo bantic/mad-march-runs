@@ -2,8 +2,11 @@
   {{#each teamSlots as |teamSlot|}}
     {{#with teamSlot.team as |team|}}
       <div class="team">
-        <div class="name">{{team.name}}</div>
+        <div class="name">SELECTED {{team.name}}</div>
         <div class="seed">{{team.seed}}</div>
+        <button {{action 'removeTeam' team}} class="btn remove">
+          Remove
+        </button>
       </div>
     {{else}}
       <div class='team empty'>empty</div>
@@ -14,7 +17,7 @@
 <div class="teams">
   {{#each model as |team|}}
   <div class="team">
-    <div class="name">{{team.name}} </div>
+    <div class="name">PICKABLE {{team.name}} </div>
     <div class='seed'>{{team.seed}}</div>
     <button {{action 'selectTeam' team}} class="btn">
       Select

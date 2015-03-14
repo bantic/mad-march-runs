@@ -17,6 +17,10 @@ export default Ember.Route.extend({
     selectTeam(team) {
       let user = this.get('session.currentUser');
       user.get('teams').pushObject(team);
+    },
+    removeTeam(team) {
+      let user = this.get('session.currentUser');
+      user.get('teams').removeObject(team);
     }
   }
 });
