@@ -1,3 +1,5 @@
+USER.DIRTY {{session.currentUser.isDirty}}
+USER.TEAM.DIRTY {{session.currentUser.teams.isDirty}}
 <div class="selected-teams">
   {{#each teamSlots as |teamSlot|}}
     {{#with teamSlot.team as |team|}}
@@ -12,6 +14,10 @@
       <div class='team empty'>empty</div>
     {{/with}}
   {{/each}}
+
+  {{#if showSaveSelections}}
+    <button {{action 'saveSelections'}} class='btn'>Save Selections</button>
+  {{/if}}
 </div>
 
 <div class="teams">

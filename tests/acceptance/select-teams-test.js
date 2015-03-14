@@ -95,6 +95,12 @@ test('visiting /select-teams with none selected and selecting', function(assert)
     return this.success({teams});
   });
 
+  let updatedUserJSON;
+  stubRequest('put', 'users/:id', function(request){
+    updatedUserJSON = this.json(request);
+    return this.success({});
+  });
+
   let findTeamSlot = (index) => find(`.selected-teams .team:eq(${index})`);
 
   signIn(userData);
@@ -102,6 +108,7 @@ test('visiting /select-teams with none selected and selecting', function(assert)
   andThen( () => {
     assert.ok(findTeamSlot(0).hasClass('empty'),
               'precond: selected team idx 0 is empty');
+    expectNoElement(`.selected-teams .btn:contains(Save Selections)`);
     click('.teams .team:eq(0) .btn:contains(Select)');
   });
   andThen( () => {
@@ -109,9 +116,23 @@ test('visiting /select-teams with none selected and selecting', function(assert)
               'selected team idx 0 is not empty');
     assert.ok(findTeamSlot(0).find(`.name:contains(${teams[0].name})`).length,
               'selected team slot 0 has selected team');
+    expectElement(`.selected-teams .btn:contains(Save Selections)`);
     click(findTeamSlot(0).find(`.btn.remove`));
   });
   andThen( () => {
     assert.ok(findTeamSlot(0).hasClass('empty'));
+    expectNoElement(`.selected-teams .btn:contains(Save Selections)`);
+
+    click('.teams .team:eq(0) .btn:contains(Select)');
+  });
+  andThen( () => {
+    let btnSelector = '.selected-teams .btn:contains(Save Selections)';
+    expectElement(btnSelector);
+    click(btnSelector);
+  });
+  andThen( () => {
+    assert.ok(updatedUserJSON, 'updated user');
+    assert.deepEqual(updatedUserJSON.user.teams, [ ''+teams[0].id ],
+                 'updates with team id');
   });
 });
