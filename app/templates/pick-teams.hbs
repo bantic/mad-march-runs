@@ -1,0 +1,14 @@
+<div class="selected-teams">
+  <div class="team"></div>
+  <div class="team"></div>
+  <div class="team"></div>
+</div>
+
+<div class="teams">
+  {{#each model as |team|}}
+  <div class="team">
+    <div class="name">{{team.name}} </div>
+    <div class='seed'>{{team.seed}}</div>
+  </div>
+  {{/each}}
+</div>
