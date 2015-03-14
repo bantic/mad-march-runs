@@ -23,16 +23,16 @@
   <div class="team">
     <div class="name">PICKABLE {{team.name}} </div>
     <div class='seed'>{{team.seed}}</div>
-    <button
-         {{action 'selectTeam' team}}
-         {{bind-attr disabled=(includes-item team userTeams)}}
-         class="btn select">
-      {{#if (includes-item team userTeams)}}
-        Selected
-      {{else}}
-        Select
-      {{/if}}
-    </button>
+
+    {{#if (includes-item team userTeams)}}
+      <button disabled class='btn select'>Selected</button>
+    {{else if hasEmptyTeamSlots}}
+      <button {{action 'selectTeam' team}} class='btn select'>Select</button>
+    {{else}}
+      {{! the user hasn't selected this team but they have already selected
+          all the teams they can. FIXME maybe a message to that effect here?}}
+      <button disabled class='btn select'>Select</button>
+    {{/if}}
   </div>
   {{/each}}
 </div>

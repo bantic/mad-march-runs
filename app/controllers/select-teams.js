@@ -8,6 +8,8 @@ export default Ember.Controller.extend({
   // did the user change any selections?
   changedSelections: false,
 
+  hasEmptyTeamSlots: Ember.computed.lt('userTeams.length', MAX_TEAMS),
+
   showSaveSelections: function(){
     return this.get('changedSelections') &&
       this.get('userTeams.length') > 0;

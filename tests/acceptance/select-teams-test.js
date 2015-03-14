@@ -5,6 +5,7 @@ import {
 } from 'qunit';
 import { stubRequest } from '../helpers/fake-server';
 import startApp from 'mad-march-runs/tests/helpers/start-app';
+import { MAX_TEAMS } from 'mad-march-runs/models/user';
 
 let application;
 let teams = [
@@ -59,7 +60,7 @@ test('visiting /select-teams with no teams', function(assert) {
 });
 
 test('visiting /select-teams shows users selected teams', function(assert) {
-  let userTeams = teams.slice(0,3);
+  let userTeams = teams.slice(0,2);
   let userTeamIds = userTeams.map( (t) => t.id );
   let userData = {
     id: 1,
@@ -85,15 +86,43 @@ test('visiting /select-teams shows users selected teams', function(assert) {
       expectElement(`.teams .team:eq(${i}) .btn.select:disabled:contains(Selected)`);
     }
 
-    // last team is unselected
-    let unselectedTeamIndex = userTeams.length;
-    let selectButton = find(`.teams .team:eq(${unselectedTeamIndex}) .btn.select`);
-    assert.ok(!selectButton.is('disabled'),
-              'button is not disabled');
+    for(let i=userTeams.length; i<teams.length; i++){
+      let team = teams[i];
 
-    assert.ok(selectButton.text().indexOf('Selected') === -1,
-              'button does not contain selected text');
+      let selectButton = find(`.teams .team:eq(${i}) .btn.select`);
+      assert.ok(!selectButton.is(':disabled'), 'button is not disabled');
 
+      assert.ok(selectButton.text().indexOf('Selected') === -1,
+                'button does not contain selected text');
+      assert.ok(selectButton.text().indexOf('Select') > -1,
+                'button does contain selected text');
+    }
+  });
+});
+
+test('visiting /select-teams when user has selected MAX_TEAMS teams', function(assert) {
+  let userTeams = teams.slice(0,MAX_TEAMS);
+  let userTeamIds = userTeams.map( (t) => t.id );
+  let userData = {
+    id: 1,
+    name: 'bob',
+    teams: userTeamIds
+  };
+
+  stubRequest('get', 'teams', function(request){
+    return this.success({teams});
+  });
+
+  signIn(userData);
+  visit('/select-teams');
+
+  andThen(function() {
+    for(let i=userTeams.length; i<teams.length; i++){
+      let team = teams[i];
+
+      let selectButton = find(`.teams .team:eq(${i}) .btn.select`);
+      assert.ok(selectButton.is(':disabled'), 'button is disabled');
+    }
   });
 });
 
