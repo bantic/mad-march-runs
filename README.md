@@ -1,3 +1,6 @@
+[![Build
+Status](https://travis-ci.org/bantic/mad-march-runs.svg?branch=master)](https://travis-ci.org/bantic/mad-march-runs)
+
 # Mad-march-runs
 
 This README outlines the details of collaborating on this Ember application.
