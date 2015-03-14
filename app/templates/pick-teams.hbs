@@ -1,7 +1,15 @@
 <div class="selected-teams">
-  <div class="team"></div>
-  <div class="team"></div>
-  <div class="team"></div>
+  {{#each teamSlots as |teamSlot|}}
+    {{#if teamSlot.team}}
+      <div class="team">
+        SELECTED:
+        <div class="name">{{team.name}}</div>
+        <div class="seed">{{team.seed}}</div>
+      </div>
+    {{else}}
+      <div class='team'>empty</div>
+    {{/if}}
+  {{/each}}
 </div>
 
 <div class="teams">

@@ -55,3 +55,37 @@ test('visiting /pick-teams', function(assert) {
     });
   });
 });
+
+test('visiting /pick-teams shows users selected teams', function(assert) {
+  let allTeams = [
+    {id: 1, name: 'xavier', seed: 1},
+    {id: 2, name: 'villanova', seed: 2},
+    {id: 3, name: 'florida gulf coast', seed: 3},
+    {id: 4, name: 'UNC', seed: 16}
+  ];
+  let userTeams = allTeams.slice(0,3).map( (team) => team.id );
+  let userData = {
+    id: 1,
+    name: 'bob',
+    teams: userTeams
+  };
+
+  // 2 per team + 5 element assertions + 1 assertion for ajax
+//  assert.expect(teams.length*2 + 5 + 1);
+
+  stubRequest('get', 'teams', function(request){
+    return this.success({teams: allTeams});
+  });
+
+  signIn(userData);
+
+  visit('/pick-teams');
+
+  andThen(function() {
+    assert.equal(currentPath(), 'pick-teams');
+
+    expectElement('.selected-teams .team:eq(0)');
+    expectElement('.selected-teams .team:eq(1)');
+    expectElement('.selected-teams .team:eq(2)');
+  });
+});
