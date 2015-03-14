@@ -25,8 +25,15 @@ USER.TEAM.DIRTY {{session.currentUser.teams.isDirty}}
   <div class="team">
     <div class="name">PICKABLE {{team.name}} </div>
     <div class='seed'>{{team.seed}}</div>
-    <button {{action 'selectTeam' team}} class="btn">
-      Select
+    <button
+         {{action 'selectTeam' team}}
+         {{bind-attr disabled=(includes-item team userTeams)}}
+         class="btn select">
+      {{#if (includes-item team userTeams)}}
+        Selected
+      {{else}}
+        Select
+      {{/if}}
     </button>
   </div>
   {{/each}}

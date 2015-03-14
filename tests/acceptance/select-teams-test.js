@@ -80,7 +80,20 @@ test('visiting /select-teams shows users selected teams', function(assert) {
       expectElement(`.selected-teams .team:eq(${i}) .name:contains(${team.name})`);
       expectElement(`.selected-teams .team:eq(${i}) .seed:contains(${team.seed})`);
       expectElement(`.selected-teams .team:eq(${i}) .btn.remove`);
+
+      expectElement(`.teams .team:eq(${i}) .btn.select:disabled`);
+      expectElement(`.teams .team:eq(${i}) .btn.select:disabled:contains(Selected)`);
     }
+
+    // last team is unselected
+    let unselectedTeamIndex = userTeams.length;
+    let selectButton = find(`.teams .team:eq(${unselectedTeamIndex}) .btn.select`);
+    assert.ok(!selectButton.is('disabled'),
+              'button is not disabled');
+
+    assert.ok(selectButton.text().indexOf('Selected') === -1,
+              'button does not contain selected text');
+
   });
 });
 
