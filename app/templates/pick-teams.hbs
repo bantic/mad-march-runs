@@ -1,14 +1,13 @@
 <div class="selected-teams">
   {{#each teamSlots as |teamSlot|}}
-    {{#if teamSlot.team}}
+    {{#with teamSlot.team as |team|}}
       <div class="team">
-        SELECTED:
         <div class="name">{{team.name}}</div>
         <div class="seed">{{team.seed}}</div>
       </div>
     {{else}}
-      <div class='team'>empty</div>
-    {{/if}}
+      <div class='team empty'>empty</div>
+    {{/with}}
   {{/each}}
 </div>
 
