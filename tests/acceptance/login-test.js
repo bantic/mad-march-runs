@@ -71,3 +71,35 @@ test('visiting /login and clicking login button posts data', function(assert) {
     assert.equal(currentPath(), 'index');
   });
 });
+
+test('visiting /login with invalid creds', function(assert){
+  assert.expect(2);
+
+  let email = 'abc@example.com',
+      password = 'badapssword';
+  let userId = '1';
+  let tokenData = {
+    id: 'auth-token',
+    token: 'abcdef',
+    email,
+    user: userId
+  };
+
+  stubRequest('post', 'api/tokens', function(request){
+    assert.ok(true, 'posts to tokens');
+
+    return this.error({error: 'wrong password'});
+  });
+
+  visit('/login');
+
+  andThen(() => {
+    fillIn('input[name="email"]', email);
+    fillIn('input[name="password"]', password);
+    click('.btn:contains(Log in)');
+  });
+
+  andThen(() => {
+    expectElement('.error:contains(wrong password)');
+  });
+});

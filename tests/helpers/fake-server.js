@@ -8,9 +8,11 @@ function stringifyJSON(json){
 }
 
 function raiseOnUnhandledRequest(verb, path, request){
-  console.error("FakeServer received unhandled request",{verb:verb,path:path,request:request});
+  let message = "FakeServer received unhandled request for ${verb} ${path}";
+  console.error(message, request);
   Ember.run( () => {
-    throw "FakeServer received unhandled request for :" + verb + " " + path;
+    if (window.ok) { window.ok(false, message); }
+    throw message;
   });
 }
 
