@@ -155,7 +155,7 @@ test('visiting /select-teams with none selected and selecting', function(assert)
   });
   andThen( () => {
     assert.ok(updatedUserJSON, 'updated user');
-    assert.deepEqual(updatedUserJSON.user.teams, [ ''+teams[0].id ],
+    assert.deepEqual(updatedUserJSON.user.team_ids, [ ''+teams[0].id ],
                  'updates with team id');
   });
 });
