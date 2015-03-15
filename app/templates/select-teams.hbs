@@ -25,22 +25,26 @@
 <hr>
 
 <div class="teams">
-  <h2>Select teams:</h2>
+  <h2>Select {{maxTeams}} teams:</h2>
 
-  {{#each model as |team|}}
-  <div class="team">
-    <span class="name">{{team.name}} </span>
-    <span class='seed'>(seed {{team.seed}})</span>
+  {{#each groupedTeams as |group|}}
+    <h3>{{group.region}}</h3>
 
-    {{#if (includes-item team userTeams)}}
-      <button disabled class='btn select'>Selected</button>
-    {{else if hasEmptyTeamSlots}}
-      <button {{action 'selectTeam' team}} class='btn select'>Select</button>
-    {{else}}
-      {{! the user hasn't selected this team but they have already selected
-          all the teams they can. FIXME maybe a message to that effect here?}}
-      <button disabled class='btn select'>Select</button>
-    {{/if}}
-  </div>
+    {{#each group.teams as |team|}}
+    <div class="team">
+      <span class="name">{{team.name}} </span>
+      <span class='seed'>(seed {{team.seed}})</span>
+
+      {{#if (includes-item team userTeams)}}
+        <button disabled class='btn select'>Selected</button>
+      {{else if hasEmptyTeamSlots}}
+        <button {{action 'selectTeam' team}} class='btn select'>Select</button>
+      {{else}}
+        {{! the user hasn't selected this team but they have already selected
+            all the teams they can. FIXME maybe a message to that effect here?}}
+        <button disabled class='btn select'>Select</button>
+      {{/if}}
+    </div>
+    {{/each}}
   {{/each}}
 </div>

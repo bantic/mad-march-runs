@@ -15,6 +15,8 @@ export default Ember.Controller.extend({
       this.get('userTeams.length') > 0;
   }.property('changedSelections', 'userTeams.length'),
 
+  maxTeams: MAX_TEAMS,
+
   teamSlots: function(){
     let slots = [],
         userTeams = this.get('userTeams') || [];
@@ -26,6 +28,27 @@ export default Ember.Controller.extend({
     }
     return slots;
   }.property('userTeams.[]'),
+
+  // array of {region: X, teams: []}, teams sorted by seed
+  groupedTeams: function(){
+    let regions = {};
+    let teams = this.get('model');
+    let groupings = [];
+
+    teams.forEach( (team) => {
+      let region = team.get('region') || 'unknown';
+      if (!regions[region]) { regions[region] = []; }
+      regions[region].push(team);
+    } );
+
+    Ember.keys(regions).forEach( (region) => {
+      let teams = regions[region];
+      teams = teams.sortBy('seed');
+      groupings.push( {teams: teams, region:region} );
+    });
+
+    return groupings;
+  }.property('model.[]'),
 
   actions: {
     selectTeam(team) {
