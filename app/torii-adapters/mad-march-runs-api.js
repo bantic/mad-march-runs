@@ -18,6 +18,21 @@ export function clearSession(){
 export default Ember.Object.extend({
   store: Ember.Service.inject,
 
+  fetch() {
+    return new Ember.RSVP.Promise( (resolve) => {
+      let tokenPayload = storage.read(config.authTokenKey);
+      if (!tokenPayload) { throw 'no tokenpayload found'; }
+      return resolve(this.store.push('token', tokenPayload));
+    }).then( (token) => {
+      return Ember.RSVP.hash({
+        currentUser: token.get('user')
+      });
+    }).catch( (e) => {
+      clearSession();
+      throw e;
+    });
+  },
+
   open(tokenData) {
     return new Ember.RSVP.Promise( (resolve) => {
       return resolve(this.store.push('token', tokenData));
@@ -29,6 +44,13 @@ export default Ember.Object.extend({
     }).catch( (e) => {
       clearSession();
       throw e;
+    });
+  },
+
+  close(){
+    return new Ember.RSVP.promise( (resolve) => {
+      clearSession();
+      resolve();
     });
   }
 });

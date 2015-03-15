@@ -1,6 +1,7 @@
 <header>
 {{#if session.isAuthenticated}}
   Logged in as {{session.currentUser.email}}
-  {{log session.currentUser}}
+{{else}}
+  {{link-to 'Log in' 'login'}}
 {{/if}}
 </header>
