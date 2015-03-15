@@ -1,15 +1,19 @@
+<h1>Select Your Teams</h1>
+
 <div class="selected-teams">
-  {{#each teamSlots as |teamSlot|}}
+  <h2>Your selected teams</h2>
+
+  {{#each teamSlots as |teamSlot index|}}
     {{#with teamSlot.team as |team|}}
       <div class="team">
-        <div class="name">SELECTED {{team.name}}</div>
-        <div class="seed">{{team.seed}}</div>
+        <span class="name">{{team.name}}</span>
+        <span class="seed">(seed {{team.seed}})</span>
         <button {{action 'removeTeam' team}} class="btn remove">
           Remove
         </button>
       </div>
     {{else}}
-      <div class='team empty'>empty</div>
+      <div class='team empty'>team {{increment-number index}}: empty</div>
     {{/with}}
   {{/each}}
 
@@ -18,11 +22,15 @@
   {{/if}}
 </div>
 
+<hr>
+
 <div class="teams">
+  <h2>Select teams:</h2>
+
   {{#each model as |team|}}
   <div class="team">
-    <div class="name">PICKABLE {{team.name}} </div>
-    <div class='seed'>{{team.seed}}</div>
+    <span class="name">{{team.name}} </span>
+    <span class='seed'>(seed {{team.seed}})</span>
 
     {{#if (includes-item team userTeams)}}
       <button disabled class='btn select'>Selected</button>

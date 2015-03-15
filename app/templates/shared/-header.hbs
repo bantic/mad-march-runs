@@ -1,6 +1,7 @@
 <header>
 {{#if session.isAuthenticated}}
   Logged in as {{session.currentUser.email}}
+  {{link-to 'Select Your Teams' 'select-teams'}}
 {{else}}
   {{link-to 'Log in' 'login'}}
 {{/if}}
