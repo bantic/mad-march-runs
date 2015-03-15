@@ -1,0 +1,24 @@
+{{input name='email' value=model.email}}
+{{input name='password' type='password' value=model.password}}
+
+<button {{action 'signUp'}} class='btn sign-up'>Sign up</button>
+
+{{#if success}}
+<div class="success">
+  You are signed up! Now go {{link-to 'log in' 'login'}}.
+</div>
+{{/if}}
+
+{{#if model.errors}}
+<div class="error">
+  There was an error signing you up.<br>
+
+  {{#each model.errors.email as |error|}}
+    Email {{error.message}}
+  {{/each}}
+
+  {{#each model.errors.password as |error|}}
+    Password {{error.message}}
+  {{/each}}
+</div>
+{{/if}}

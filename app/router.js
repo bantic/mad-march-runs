@@ -8,6 +8,7 @@ var Router = Ember.Router.extend({
 Router.map(function() {
   this.route('login');
   this.route('select-teams');
+  this.route('sign-up');
 });
 
 export default Router;
