@@ -6,6 +6,10 @@ Status](https://travis-ci.org/bantic/mad-march-runs.svg?branch=master)](https://
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
 
+## deployment
+
+ * `./deploy.sh`
+
 ## Prerequisites
 
 You will need the following things properly installed on your computer.

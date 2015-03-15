@@ -57,7 +57,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.apiHost = 'http://mad-march-runs-api.herokuapp.com';
   }
 
   return ENV;
