@@ -18,6 +18,12 @@ module.exports = function(environment) {
       // when it is created
     },
 
+    contentSecurityPolicy: {
+      'style-src': "'self' 'unsafe-inline'",
+      'script-src': "'self' 'unsafe-inline'",
+      "connect-src": "'self' http://localhost:3000 ws://localhost:35729 ws://0.0.0.0:35729"
+    },
+
     torii: {
       sessionServiceName: 'session'
     },

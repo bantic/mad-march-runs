@@ -48,7 +48,7 @@ export default Ember.Object.extend({
   },
 
   close(){
-    return new Ember.RSVP.promise( (resolve) => {
+    return new Ember.RSVP.Promise( (resolve) => {
       clearSession();
       resolve();
     });

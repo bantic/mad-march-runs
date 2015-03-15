@@ -1,7 +1,9 @@
 <header>
+{{link-to 'Rules' 'rules'}}
 {{#if session.isAuthenticated}}
   Logged in as {{session.currentUser.email}}
   {{link-to 'Select Your Teams' 'select-teams'}}
+  {{link-to 'Sign out' 'sign-out'}}
 {{else}}
   {{link-to 'Log in' 'login'}}
 {{/if}}

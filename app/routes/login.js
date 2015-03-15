@@ -2,6 +2,12 @@ import Ember from 'ember';
 import getErrorMessage from '../utils/get-error-message';
 
 export default Ember.Route.extend({
+  redirect() {
+    if (this.get('session.isAuthenticated')) {
+      this.transitionTo('index');
+    }
+  },
+
   actions: {
     login: function(email, password){
       let creds = {email, password};

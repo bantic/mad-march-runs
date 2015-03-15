@@ -9,16 +9,16 @@
 </div>
 {{/if}}
 
-{{#if model.errors}}
-<div class="error">
-  There was an error signing you up.<br>
+{{#if model.errors.length}}
+  <div class="error">
+    There was an error signing you up.<br>
 
-  {{#each model.errors.email as |error|}}
-    Email {{error.message}}
-  {{/each}}
+    {{#each model.errors.email as |error|}}
+      Email {{error.message}}
+    {{/each}}
 
-  {{#each model.errors.password as |error|}}
-    Password {{error.message}}
-  {{/each}}
-</div>
+    {{#each model.errors.password as |error|}}
+      Password {{error.message}}
+    {{/each}}
+  </div>
 {{/if}}
