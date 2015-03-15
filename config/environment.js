@@ -47,6 +47,7 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.apiHost = '';
+    ENV.authTokenKey = 'mmr-auth-token-test';
   }
 
   if (environment === 'production') {
