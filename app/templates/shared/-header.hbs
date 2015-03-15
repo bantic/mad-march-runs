@@ -1,0 +1,6 @@
+<header>
+{{#if session.isAuthenticated}}
+  Logged in as {{session.currentUser.email}}
+  {{log session.currentUser}}
+{{/if}}
+</header>

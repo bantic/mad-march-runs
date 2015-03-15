@@ -24,7 +24,8 @@ module.exports = function(environment) {
 
     apiHost: 'http://localhost:3000',
     apiNamespace: 'api',
-    tokenPath: 'tokens'
+    tokenPath: 'tokens',
+    authTokenKey: 'mmr-auth-token'
   };
 
   if (environment === 'development') {
