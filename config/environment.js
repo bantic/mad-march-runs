@@ -20,7 +20,11 @@ module.exports = function(environment) {
 
     torii: {
       sessionServiceName: 'session'
-    }
+    },
+
+    apiHost: 'http://localhost:3000',
+    apiNamespace: 'api',
+    tokenPath: 'tokens'
   };
 
   if (environment === 'development') {
@@ -41,6 +45,7 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.apiHost = '';
   }
 
   if (environment === 'production') {

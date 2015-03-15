@@ -25,6 +25,9 @@ let makeUser = (userData) => {
 module('Acceptance: SelectTeams', {
   beforeEach: function() {
     application = startApp();
+    stubRequest('get', 'api/teams', function(request){
+      return this.success({teams});
+    });
   },
 
   afterEach: function() {
@@ -34,13 +37,8 @@ module('Acceptance: SelectTeams', {
 
 test('visiting /select-teams with no teams', function(assert) {
   // 2 per team + 5 element assertions + 1 assertion for ajax
-  assert.expect(teams.length*3 + 5 + 1);
+  assert.expect(teams.length*3 + 5);
   let userData = makeUser({teams:[]});
-
-  stubRequest('get', 'teams', function(request){
-    assert.ok(true, 'gets teams');
-    return this.success({teams});
-  });
 
   signIn(userData);
   visit('/select-teams');
@@ -70,10 +68,6 @@ test('visiting /select-teams shows users selected teams', function(assert) {
   let userTeams = teams.slice(0,2);
   let userTeamIds = userTeams.map( (t) => t.id );
   let userData = makeUser({teams:userTeamIds});
-
-  stubRequest('get', 'teams', function(request){
-    return this.success({teams});
-  });
 
   signIn(userData);
   visit('/select-teams');
@@ -108,10 +102,6 @@ test('visiting /select-teams when user has selected MAX_TEAMS teams', function(a
   let userTeamIds = userTeams.map( (t) => t.id );
   let userData = makeUser({teams:userTeamIds});
 
-  stubRequest('get', 'teams', function(request){
-    return this.success({teams});
-  });
-
   signIn(userData);
   visit('/select-teams');
 
@@ -128,12 +118,8 @@ test('visiting /select-teams when user has selected MAX_TEAMS teams', function(a
 test('visiting /select-teams with none selected and selecting', function(assert){
   let userData = makeUser({teams:[]});
 
-  stubRequest('get', 'teams', function(request){
-    return this.success({teams});
-  });
-
   let updatedUserJSON;
-  stubRequest('put', 'users/:id', function(request){
+  stubRequest('put', 'api/users/:id', function(request){
     updatedUserJSON = this.json(request);
     return this.success({});
   });
@@ -176,10 +162,6 @@ test('visiting /select-teams with none selected and selecting', function(assert)
 
 test('visiting /select-teams when user cannot select redirects to index', function(assert){
   let userData = makeUser({canSelectTeams:false});
-
-  stubRequest('get', 'teams', function(request){
-    return this.success({teams});
-  });
 
   signIn(userData);
   visit('/select-teams');

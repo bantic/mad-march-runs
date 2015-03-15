@@ -1,10 +1,6 @@
 import Ember from "ember";
-import config from "../config/environment";
 
 export default function(url, options){
-  if (config.environment === "test") {
-    url = url.replace(new RegExp('[^/]*(//)?[^/]*/'), '/');
-  }
   return new Ember.RSVP.Promise(function(resolve, reject){
     options.dataType = 'json';
     options.success = Ember.run.bind(null, resolve);
