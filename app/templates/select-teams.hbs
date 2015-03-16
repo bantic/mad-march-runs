@@ -1,6 +1,24 @@
-<h1>Select Your Teams</h1>
+<h1>Select Your March Runs Teams</h1>
 
-<h2>Your selected teams</h2>
+<ul class='simple-rules'>
+  <li>
+    Pick 3 teams from the field of 64 below to fill the three empty slots.
+  </li>
+  <li>
+    Choose teams that you think will make deep runs in the tournament.
+  </li>
+  <li>
+    You'll get 1 point &times; the team's seed &times; the number of wins for each team.
+    <br>
+    (Example: if you select Gonzaga, a 2 seed, and they win 3 times, you get 6 points.)
+  </li>
+  <li>
+    Read the {{link-to 'full rules' 'rules'}} for more info.
+  </li>
+</ul>
+
+<h2>Your March Runs teams</h2>
+
 <div class="selected-teams">
   <div class="flex-container">
     {{#each teamSlots as |teamSlot index|}}
@@ -20,11 +38,14 @@
     <button disabled={{notShowSaveSelections}}
             {{action 'saveSelections'}}
             class='btn save-selections {{if notShowSaveSelections "disabled"}}'>
-      Save Selections
+      {{#if isSavingSelections}}
+        Saving...
+      {{else}}
+        Save Selections
+      {{/if}}
     </button>
   </div>
 </div>
-
 
 <hr>
 

@@ -1,5 +1,18 @@
 @import 'bower_components/bourbon/dist/bourbon';
 
+$mint-green: #9CBA7F;
+
+html, body {
+  margin: 0; padding: 0;
+  background: $mint-green;
+}
+
+.container {
+  padding: 1em;
+  min-height: 500px;
+  background: #FFF;
+}
+
 .teams .region {
   @include display(flex);
   @include justify-content(flex-start);
@@ -68,5 +81,53 @@
   }
   &.medium {
     height: 75px;
+  }
+}
+
+header {
+  height: 50px;
+  background: $mint-green;
+  padding: 0.5em;
+
+  #brand {
+    float: left;
+    width: 200px;
+    margin-top: 10px;
+  }
+  nav {
+    margin-top: 10px;
+    float: right;
+  }
+}
+
+footer {
+  text-align: center;
+  p { font-size: 12px; }
+  background: $mint-green;
+}
+
+.hero {
+  text-align: center;
+  width: 50%;
+  margin: 30px auto;
+
+  h1 {
+    font-size: 48px;
+  }
+}
+
+form {
+  .form-input {
+    font-size: larger;
+    padding: 4px;
+  }
+
+  .form-body {
+    margin-bottom: 15px;
+  }
+
+  .btn.log-in, .btn.sign-up {
+    font-size: larger;
+    padding: 5px;
   }
 }

@@ -1,0 +1,13 @@
+<div class='hero'>
+
+<h1>Mad March Rules</h1>
+
+<p>Add some action to your bracket!</p>
+
+{{#if session.isAuthenticated}}
+  <p>Now that you're logged in, {{link-to 'select your teams' 'select-teams'}}.</p>
+{{else}}
+  <p>{{link-to 'Log in' 'login'}} to your account or {{link-to 'sign up' 'sign-up'}} to get started.</p>
+{{/if}}
+
+</div>

@@ -8,6 +8,8 @@ export default Ember.Controller.extend({
   // did the user change any selections?
   changedSelections: false,
 
+  isSavingSelections: false,
+
   hasEmptyTeamSlots: Ember.computed.lt('userTeams.length', MAX_TEAMS),
 
   showSaveSelections: function(){
@@ -70,8 +72,10 @@ export default Ember.Controller.extend({
 
     saveSelections(){
       let user = this.get('user');
+      this.set('isSavingSelections', true);
       user.save().then( () => {
         this.set('changedSelections', false);
+        this.set('isSavingSelections', false);
       });
     }
   }

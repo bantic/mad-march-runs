@@ -15,6 +15,8 @@ export default Ember.Route.extend({
         this.transitionTo('index');
       }).catch( (e) => {
         this.controller.set('error', getErrorMessage(e));
+      }).finally( () => {
+        this.controller.set('isSubmitting', false);
       });
     }
   }

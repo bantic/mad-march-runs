@@ -1,24 +1,46 @@
-{{input name='email' value=model.email}}
-{{input name='password' type='password' value=model.password}}
-
-<button {{action 'signUp'}} class='btn sign-up'>Sign up</button>
+<h2>Sign up</h2>
 
 {{#if success}}
-<div class="success">
-  You are signed up! Now go {{link-to 'log in' 'login'}}.
-</div>
-{{/if}}
-
-{{#if model.errors.length}}
-  <div class="error">
-    There was an error signing you up.<br>
-
-    {{#each model.errors.email as |error|}}
-      Email {{error.message}}
-    {{/each}}
-
-    {{#each model.errors.password as |error|}}
-      Password {{error.message}}
-    {{/each}}
+  <div class="success">
+    You are signed up! Now go {{link-to 'log in' 'login'}}.
   </div>
+{{else}}
+  <form {{action 'signUp' on='submit'}}>
+    <div class="form-body">
+      <label for="email">Email:</label>
+      {{input class='form-input' name="email" value=model.email placeholder='email'}}
+
+      <label for="password">Password:</label>
+      {{input class='form-input' name="password" type='password' value=model.password placeholder='password'}}
+    </div>
+
+    {{#if model.errors.length}}
+      <div class="error">
+        There was an error signing you up, please try again.<br>
+
+        {{#each model.errors.email as |error|}}
+          Email {{error.message}}
+        {{/each}}
+
+        {{#each model.errors.password as |error|}}
+          Password {{error.message}}
+        {{/each}}
+
+        <p class="small">
+          Need help? Email <a href='mailto:contact@madmarchruns.com'>contact@madmarchruns.com</a>.
+        </p>
+      </div>
+    {{/if}}
+
+    <div>
+      <button disabled={{model.isSaving}} {{action 'signUp'}} type='submit' class='btn sign-up'>
+        {{#if model.isSaving}}
+          Signing up...
+        {{else }}
+          Sign up
+        {{/if}}
+      </button>
+    </div>
+  </form>
 {{/if}}
+

@@ -1,10 +1,31 @@
-{{input name="email" value=email}}
-{{input name="password" type='password' value=password}}
+<h2>Login</h2>
 
-{{#if error}}
-<div class="error">Error: {{error}}</div>
-{{/if}}
 
-<button {{action 'login' email password}} class="btn">Log in</button>
+<form {{action 'login' email password on='submit'}}>
+  <div class="form-body">
+    <label for="email">Email:</label>
+    {{input class='form-input' name="email" value=email placeholder='email'}}
 
-Need an account? {{link-to 'Sign up here' 'sign-up'}}.
+    <label for="password">Password:</label>
+    {{input class='form-input' name="password" type='password' value=password placeholder='password'}}
+  </div>
+
+  {{#if error}}
+    <div class="error">Error: {{error}}</div>
+  {{/if}}
+
+  <div>
+    <button disabled={{isSubmitting}} {{action 'login' email password}} type='submit' class="btn log-in">
+      {{#if isSubmitting}}
+        Logging you in...
+      {{else}}
+        Log in
+      {{/if}}
+    </button>
+  </div>
+
+  <p>
+    Need an account? {{link-to 'Sign up here' 'sign-up'}}.
+  </p>
+</form>
+
