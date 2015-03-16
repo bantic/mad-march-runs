@@ -36,8 +36,8 @@ module('Acceptance: SelectTeams', {
 });
 
 test('visiting /select-teams with no teams', function(assert) {
-  // 2 per team + 5 element assertions + 1 assertion for ajax
-  assert.expect(teams.length*3 + 5);
+  // 2 per team + 5 element assertions
+  assert.expect(teams.length*2 + 5);
   let userData = makeUser({teams:[]});
 
   signIn(userData);
@@ -58,8 +58,6 @@ test('visiting /select-teams with no teams', function(assert) {
                  `team div contains name ${team.name}`);
       assert.ok( teamDiv.find(`.seed:contains(${team.seed})`).length,
                  `team div contains seed ${team.seed}`);
-      assert.ok( teamDiv.find(`.btn:contains(Select)`).length,
-                 `has select button for team @ ${index}`);
     });
   });
 });
@@ -77,22 +75,15 @@ test('visiting /select-teams shows users selected teams', function(assert) {
       let team = userTeams[i];
       expectElement(`.selected-teams .team:eq(${i}) .name:contains(${team.name})`);
       expectElement(`.selected-teams .team:eq(${i}) .seed:contains(${team.seed})`);
-      expectElement(`.selected-teams .team:eq(${i}) .btn.remove`);
 
-      expectElement(`.teams .team:eq(${i}) .btn.select:disabled`);
-      expectElement(`.teams .team:eq(${i}) .btn.select:disabled:contains(Selected)`);
+      // team in .teams list has selected class
+      expectElement(`.teams .team:eq(${i}).selected`);
     }
 
-    for(let i=userTeams.length; i<teams.length; i++){
+    for (let i=userTeams.length; i<teams.length; i++) {
       let team = teams[i];
-
-      let selectButton = find(`.teams .team:eq(${i}) .btn.select`);
-      assert.ok(!selectButton.is(':disabled'), 'button is not disabled');
-
-      assert.ok(selectButton.text().indexOf('Selected') === -1,
-                'button does not contain selected text');
-      assert.ok(selectButton.text().indexOf('Select') > -1,
-                'button does contain selected text');
+      let div = find(`.teams .team:eq(${i})`);
+      assert.ok(!div.hasClass('selected'), 'team is not selected');
     }
   });
 });
@@ -105,15 +96,24 @@ test('visiting /select-teams when user has selected MAX_TEAMS teams', function(a
   signIn(userData);
   visit('/select-teams');
 
-  andThen(function() {
-    for(let i=userTeams.length; i<teams.length; i++){
-      let team = teams[i];
+  let selectedTeamsText;
+  andThen( () => {
+    selectedTeamsText = find(`.selected-teams .team`).text();
 
-      let selectButton = find(`.teams .team:eq(${i}) .btn.select`);
-      assert.ok(selectButton.is(':disabled'), 'button is disabled');
+    for(let i=userTeams.length; i<teams.length; i++){
+      click(`.teams .team:eq(${i})`);
     }
   });
+
+  andThen( () => {
+    // sort of a weird way to test that it's not possible to add a 4th team
+    assert.equal(selectedTeamsText,
+                 find(`.selected-teams .team`).text(),
+                 'selected teams text has not changed -- clicking is a no-op');
+  });
 });
+
+// FIXME insert test here to test that clicking a selected team deselects it
 
 test('visiting /select-teams with none selected and selecting', function(assert){
   let userData = makeUser({teams:[]});
@@ -131,8 +131,7 @@ test('visiting /select-teams with none selected and selecting', function(assert)
   andThen( () => {
     assert.ok(findTeamSlot(0).hasClass('empty'),
               'precond: selected team idx 0 is empty');
-    expectNoElement(`.selected-teams .btn:contains(Save Selections)`);
-    click('.teams .team:eq(0) .btn:contains(Select)');
+    click('.teams .team:eq(0)');
   });
   andThen( () => {
     assert.ok(!findTeamSlot(0).hasClass('empty'),
@@ -140,16 +139,16 @@ test('visiting /select-teams with none selected and selecting', function(assert)
     assert.ok(findTeamSlot(0).find(`.name:contains(${teams[0].name})`).length,
               'selected team slot 0 has selected team');
     expectElement(`.selected-teams .btn:contains(Save Selections)`);
-    click(findTeamSlot(0).find(`.btn.remove`));
+    click(findTeamSlot(0));
   });
   andThen( () => {
     assert.ok(findTeamSlot(0).hasClass('empty'));
-    expectNoElement(`.selected-teams .btn:contains(Save Selections)`);
+    expectElement(`.selected-teams .btn.save-selections.disabled`);
 
-    click('.teams .team:eq(0) .btn:contains(Select)');
+    click('.teams .team:eq(0)');
   });
   andThen( () => {
-    let btnSelector = '.selected-teams .btn:contains(Save Selections)';
+    let btnSelector = '.selected-teams .btn.save-selections';
     expectElement(btnSelector);
     click(btnSelector);
   });

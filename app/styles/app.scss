@@ -1,0 +1,72 @@
+@import 'bower_components/bourbon/dist/bourbon';
+
+.teams .region {
+  @include display(flex);
+  @include justify-content(flex-start);
+  @include flex-flow(row wrap);
+
+  .team {
+    display: block;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    background: #FFF;
+    padding: 0.25em;
+    text-align: center;
+
+    cursor: pointer;
+    width: 100px;
+    margin: 0.5em;
+
+    &.selected {
+      border: 2px solid #000;
+      background: #DDD;
+    }
+  }
+}
+
+.center {
+  text-align: center;
+}
+
+.selected-teams {
+  .save-selections {
+    font-size: 36px;
+    background: lightgreen;
+    &.disabled {
+      background: #CCC;
+    }
+  }
+
+  .flex-container {
+    @include display(flex);
+    @include justify-content(space-around);
+    @include flex-flow(row);
+  }
+
+  .team {
+    display: block;
+    cursor: pointer;
+    width: 200px;
+    height: 150px;
+    border: 2px solid #000;
+    background: #DDD;
+    text-align: center;
+    padding: 1em;
+    border-radius: 5px;
+    margin: 1em;
+
+    &.empty {
+      cursor: default;
+    }
+  }
+}
+
+.team-logo {
+  height: 100px;
+  &.small {
+    height: 50px;
+  }
+  &.medium {
+    height: 75px;
+  }
+}

@@ -1,26 +1,30 @@
 <h1>Select Your Teams</h1>
 
+<h2>Your selected teams</h2>
 <div class="selected-teams">
-  <h2>Your selected teams</h2>
+  <div class="flex-container">
+    {{#each teamSlots as |teamSlot index|}}
+      {{#with teamSlot.team as |team|}}
+        <a {{action 'toggleSelect' team}} class="team">
+          {{team-logo team=team size="medium"}}
+          <span class="name">{{team.name}}</span>
+          <span class="seed">(seed {{team.seed}})</span>
+        </a>
+      {{else}}
+        <div class='team empty'>team {{increment-number index}}: empty</div>
+      {{/with}}
+    {{/each}}
+  </div>
 
-  {{#each teamSlots as |teamSlot index|}}
-    {{#with teamSlot.team as |team|}}
-      <div class="team">
-        <span class="name">{{team.name}}</span>
-        <span class="seed">(seed {{team.seed}})</span>
-        <button {{action 'removeTeam' team}} class="btn remove">
-          Remove
-        </button>
-      </div>
-    {{else}}
-      <div class='team empty'>team {{increment-number index}}: empty</div>
-    {{/with}}
-  {{/each}}
-
-  {{#if showSaveSelections}}
-    <button {{action 'saveSelections'}} class='btn'>Save Selections</button>
-  {{/if}}
+  <div class='center'>
+    <button disabled={{notShowSaveSelections}}
+            {{action 'saveSelections'}}
+            class='btn save-selections {{if notShowSaveSelections "disabled"}}'>
+      Save Selections
+    </button>
+  </div>
 </div>
+
 
 <hr>
 
@@ -29,24 +33,21 @@
 
   {{#each groupedTeams as |group|}}
     <h3>{{group.region}}</h3>
+    <div class="region">
+      {{#each group.teams as |team|}}
+        <a {{action 'toggleSelect' team}}
+           class="team {{if (includes-item team userTeams) "selected"}}">
 
-    {{#each group.teams as |team|}}
-    <div class="team">
-      {{team-logo team=team}}
+          {{team-logo team=team size="small"}}
 
-      <span class="name">{{team.name}} </span>
-      <span class='seed'>(seed {{team.seed}})</span>
+          <div>
+            <span class="name">{{team.name}}</span>
+            <span class='seed'>({{team.seed}})</span>
+          </div>
 
-      {{#if (includes-item team userTeams)}}
-        <button disabled class='btn select'>Selected</button>
-      {{else if hasEmptyTeamSlots}}
-        <button {{action 'selectTeam' team}} class='btn select'>Select</button>
-      {{else}}
-        {{! the user hasn't selected this team but they have already selected
-            all the teams they can. FIXME maybe a message to that effect here?}}
-        <button disabled class='btn select'>Select</button>
-      {{/if}}
+        </a>
+      {{/each}}
     </div>
-    {{/each}}
+
   {{/each}}
 </div>

@@ -15,6 +15,8 @@ export default Ember.Controller.extend({
       this.get('userTeams.length') > 0;
   }.property('changedSelections', 'userTeams.length'),
 
+  notShowSaveSelections: Ember.computed.not('showSaveSelections'),
+
   maxTeams: MAX_TEAMS,
 
   teamSlots: function(){
@@ -51,16 +53,21 @@ export default Ember.Controller.extend({
   }.property('model.[]'),
 
   actions: {
-    selectTeam(team) {
-      this.set('changedSelections', true);
+    toggleSelect(team) {
+      let changed = false;
+
       let user = this.get('user');
-      user.get('teams').pushObject(team);
+      if (user.get('teams').contains(team)) {
+        changed = true;
+        user.get('teams').removeObject(team);
+      } else {
+        if (!this.get('hasEmptyTeamSlots')) { return; }
+        changed = true;
+        user.get('teams').pushObject(team);
+      }
+      this.set('changedSelections', changed);
     },
-    removeTeam(team) {
-      this.set('changedSelections', true);
-      let user = this.get('user');
-      user.get('teams').removeObject(team);
-    },
+
     saveSelections(){
       let user = this.get('user');
       user.save().then( () => {
