@@ -32,6 +32,8 @@
 
     {{#each group.teams as |team|}}
     <div class="team">
+      {{team-logo team=team}}
+
       <span class="name">{{team.name}} </span>
       <span class='seed'>(seed {{team.seed}})</span>
 
