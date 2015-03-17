@@ -3,16 +3,17 @@
 <div id="brand">Mad March Runs</div>
 
 <nav>
-  {{link-to 'Rules' 'rules'}}
+  {{link-to 'Game Rules' 'rules'}} |
   {{#if session.isAuthenticated}}
-    Logged in as {{session.currentUser.email}}
-    {{link-to 'Select Your March Runs Teams' 'select-teams'}}
+    <b>{{session.currentUser.email}}</b> |
+    {{link-to 'Select Runs Teams' 'select-teams'}} |
+    {{link-to 'Select Picks' 'picks'}} |
     {{#if session.currentUser.isAdmin}}
-      <a target='_blank' href="http://mad-march-runs-api.herokuapp.com/admin">Admin</a>
+      <a target='_blank' href="http://mad-march-runs-api.herokuapp.com/admin">Admin</a> |
     {{/if}}
     {{link-to 'Sign out' 'sign-out'}}
   {{else}}
-    {{link-to 'Log in' 'login'}}
+    {{link-to 'Log in' 'login'}} |
     {{link-to 'Sign up' 'sign-up'}}
   {{/if}}
 </nav>

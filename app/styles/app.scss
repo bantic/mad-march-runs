@@ -75,12 +75,15 @@ html, body {
 }
 
 .team-logo {
-  height: 100px;
+  width:: 150px;
   &.small {
-    height: 50px;
+    width: 75px;
   }
   &.medium {
-    height: 75px;
+    height: 100px;
+  }
+  &.tiny {
+    width: 20px;
   }
 }
 

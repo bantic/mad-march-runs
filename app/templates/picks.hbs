@@ -1,0 +1,28 @@
+<h2>Picks</h2>
+
+<p>You will be able to select your daily picks here soon.</p>
+
+<h3>Rounds</h3>
+
+<ol>
+{{#each model as |round|}}
+  <li>
+    {{round.name}}
+    <ul>
+      {{#each round.games as |game|}}
+      <li>
+        {{#with game.teams.firstObject as |team|}}
+          {{team-logo team=team size="tiny"}}
+          {{team.name}}
+        {{/with}}
+        vs
+        {{#with game.teams.lastObject as |team|}}
+          {{team-logo team=team size="tiny"}}
+          {{team.name}}
+        {{/with}}
+      </li>
+      {{/each}}
+    </ul>
+  </li>
+{{/each}}
+</ol>

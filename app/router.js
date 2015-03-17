@@ -11,6 +11,7 @@ Router.map(function() {
   this.route('sign-up');
   this.route('sign-out');
   this.route('rules');
+  this.route('picks');
 });
 
 export default Router;
