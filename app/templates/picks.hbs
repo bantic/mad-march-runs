@@ -13,8 +13,15 @@
 <p>
   For each of the available rounds below, click "Select Matchup" next to the
   game you want to pick, then click the button to lock in the team you think
-  will <em>beat the spread</em>. The spread is determined by the difference
-  in the team seeds. Read the {{'link-to' 'full rules' 'rules'}} for more info.
+  will <em>win</em>.
+  The spread is determined by the difference in the team seeds and will
+  determine your bonus points if your team wins.
+  If your team <em>loses outright</em>, you'll get a strike. 3 strikes and you're
+  eliminated!
+</p>
+
+<p>
+  Read the {{'link-to' 'full rules' 'rules'}} for more info.
 </p>
 
 <p>
@@ -63,14 +70,14 @@
                     {{#with game.teams.firstObject as |team|}}
                       <button {{action 'selectWinner' game team}}
                         class='btn select-winner'>
-                        Lock in: {{team.name}} to beat the spread
+                        Lock in: {{team.name}} to win
                       </button>
                     {{/with}}
                     or
                     {{#with game.teams.lastObject as |team|}}
                       <button {{action 'selectWinner' game team}}
                         class='btn select-winner'>
-                        Lock in: {{team.name}} to beat the spread
+                        Lock in: {{team.name}} to win
                       </button>
                     {{/with}}
                   </div>
