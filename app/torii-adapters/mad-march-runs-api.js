@@ -11,6 +11,20 @@ function persistSession(token){
   });
 }
 
+function identifyUser(user){
+  if (!user) { return; }
+  if (window.Rollbar) {
+    window.Rollbar.configure({
+      payload: {
+        person: {
+          id: user.get('id'),
+          email: user.get('email')
+        }
+      }
+    });
+  }
+}
+
 export function clearSession(){
   storage.remove(config.authTokenKey);
 }
@@ -27,6 +41,9 @@ export default Ember.Object.extend({
       return Ember.RSVP.hash({
         currentUser: token.get('user')
       });
+    }).then((results) => {
+      identifyUser(results.currentUser);
+      return results;
     }).catch( (e) => {
       clearSession();
       throw e;
@@ -41,6 +58,9 @@ export default Ember.Object.extend({
       return Ember.RSVP.hash({
         currentUser: token.get('user')
       });
+    }).then((results) => {
+      identifyUser(results.currentUser);
+      return results;
     }).catch( (e) => {
       clearSession();
       throw e;

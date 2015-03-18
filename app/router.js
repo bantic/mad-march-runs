@@ -12,6 +12,8 @@ Router.map(function() {
   this.route('sign-out');
   this.route('rules');
   this.route('picks');
+
+  this.route('not-found', {path:'/*wildcard'});
 });
 
 export default Router;
