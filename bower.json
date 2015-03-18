@@ -12,10 +12,8 @@
     "ember-qunit": "0.2.8",
     "ember-qunit-notifications": "0.0.7",
     "qunit": "~1.17.1",
+    "bootstrap-sass": "~3.3.4",
     "pretender": "0.1.0",
-    "bourbon": "3.2.4"
-  },
-  "resolutions": {
     "bourbon": "3.2.4"
   }
 }

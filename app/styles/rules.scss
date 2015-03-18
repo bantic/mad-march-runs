@@ -1,0 +1,30 @@
+.rules-header {
+  text-align: center;
+  padding-top: 30px;
+  text-transform: uppercase;
+  color: #777;
+  margin-bottom: 60px;
+
+  .inline-logo {
+    margin-top: -5px;
+    height: 50px;
+    padding-right: 10px;
+  }
+}
+
+.first-panel {
+  border-right: 3px solid $bball-orange;
+}
+
+.game-rules-panel {
+  margin: 10px;
+  padding: 0 20px 20px 20px;
+
+  .rules-panel-header {
+    text-align: center;
+  }
+
+  .game-num {
+    color: #777;
+  }
+}

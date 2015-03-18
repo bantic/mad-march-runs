@@ -1,20 +1,30 @@
 <header>
 
-<div id="brand">Mad March Runs</div>
 
-<nav>
-  {{link-to 'Game Rules' 'rules'}} |
-  {{#if session.isAuthenticated}}
-    <b>{{session.currentUser.email}}</b> |
-    {{link-to 'Select Runs Teams' 'select-teams'}} |
-    {{link-to 'Select Picks' 'picks'}} |
-    {{#if session.currentUser.isAdmin}}
-      <a target='_blank' href="http://mad-march-runs-api.herokuapp.com/admin">Admin</a> |
-    {{/if}}
-    {{link-to 'Sign out' 'sign-out'}}
-  {{else}}
-    {{link-to 'Log in' 'login'}} |
-    {{link-to 'Sign up' 'sign-up'}}
-  {{/if}}
-</nav>
+  <div class="mm-nav navbar navbar-default">
+    <div class="navbar-header">
+      {{#link-to 'index' class="navbar-brand top-padded-nav"}}
+        <img src='MadMarchRunsNav.png'>
+      {{/link-to}}
+    </div>
+    <nav>
+      <ul class="nav navbar-nav">
+        <li>{{link-to 'Game Rules' 'rules'}}</li>
+        <li>{{link-to 'Select Runs Teams' 'select-teams'}}</li>
+        <li>{{link-to 'Select Picks' 'picks'}}</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {{#if session.isAuthenticated}}
+          <li class="top-padded-nav">{{session.currentUser.email}}</li>
+          {{#if session.currentUser.isAdmin}}
+            <li><a target='_blank' href="http://mad-march-runs-api.herokuapp.com/admin">Admin</a></li>
+          {{/if}}
+          <li>{{link-to 'Sign out' 'sign-out'}}</li>
+        {{else}}
+          <li>{{link-to 'Log In' 'login'}}</li>
+          <li>{{link-to 'Sign up' 'sign-up'}}</li>
+        {{/if}}
+      </ul>
+    </nav>
+  </div>
 </header>
