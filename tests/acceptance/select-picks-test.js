@@ -11,8 +11,7 @@ let makeRound = (roundData) => {
   roundId++;
   let defaultRoundData = {
     id: roundId,
-    name: `round ${roundId}`,
-    team_ids: []
+    name: `round ${roundId}`
   };
   return Ember.$.extend(true, defaultRoundData, roundData);
 };
@@ -24,18 +23,23 @@ let teams = [
   {id: 3, name: 'florida gulf coast', seed: 3},
   {id: 4, name: 'UNC', seed: 16}
 ];
+let rounds = [
+  {id: 1, name: 'round 1', game_ids:[1]},
+  {id: 2, name: 'round 2', game_ids:[2]},
+];
 let games = [
-  {id: 1, team_ids: [1,2]},
-  {id: 2, team_ids: [3,4]}
+  {id: 1, team_ids: [1,2], round_id: rounds[0].id},
+  {id: 2, team_ids: [3,4], round_id: rounds[1].id}
 ];
 let gameTeams = [
   [teams[0], teams[1]], // game 1
   [teams[2], teams[3]], // game 2
 ];
-let rounds = [
-  makeRound({name: 'round 1', game_ids:[1]}),
-  makeRound({name: 'round 2', game_ids:[2]})
-];
+let picks = [{
+  id: 'pick1',
+  game_id: games[0].id,
+  team_id: teams[0].id
+}];
 
 let makeUser = (userData) => {
   let defaultUserData = {

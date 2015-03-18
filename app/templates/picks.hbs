@@ -2,6 +2,15 @@
 
 <p>You will be able to select your daily picks here soon.</p>
 
+<h3>Your picks</h3>
+<ul class="picks">
+{{#each user.picks as |pick|}}
+  <li class='pick'>Round: <b>{{pick.game.round.name}}</b>: You picked {{pick.team.name}}</li>
+{{else}}
+  <li class='empty'>You have not selected any picks yet.</li>
+{{/each}}
+</ul>
+
 <h3>Rounds</h3>
 
 <ol>
@@ -43,7 +52,7 @@
               {{/with}}
             </div>
           {{else}}
-            <button {{action 'selectMatchup' game}} class='btn select-matchup'>
+            <button {{action 'selectMatchup' game round}} class='btn select-matchup'>
               Select Matchup
             </button>
           {{/if}}

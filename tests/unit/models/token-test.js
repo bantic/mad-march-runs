@@ -5,7 +5,7 @@ import {
 
 moduleForModel('token', {
   // Specify the other units that are required for this test.
-  needs: ['model:user', 'model:team']
+  needs: ['model:user', 'model:team','model:pick']
 });
 
 test('it exists', function(assert) {

@@ -9,5 +9,6 @@ export default DS.Model.extend({
   isAdmin: DS.attr('boolean'),
 
   canSelectTeams: DS.attr('boolean'),
-  teams: DS.hasMany('team', {async:true})
+  teams: DS.hasMany('team', {async:true}),
+  picks: DS.hasMany('pick', {async:true})
 });

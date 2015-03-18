@@ -6,8 +6,14 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    selectMatchup(game) {
-      game.set('isSelected', true);
+    selectMatchup(game, round) {
+      // unselect all other games
+      round.get('games').then( (games) => {
+        games.forEach( (_game) => {
+          _game.set('isSelected', false);
+        });
+        game.set('isSelected', true);
+      });
     },
 
     selectWinner(game, team){
