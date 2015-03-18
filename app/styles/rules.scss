@@ -3,7 +3,6 @@
   padding-top: 30px;
   text-transform: uppercase;
   color: #777;
-  margin-bottom: 60px;
 
   .inline-logo {
     margin-top: -5px;
@@ -13,18 +12,38 @@
 }
 
 .first-panel {
-  border-right: 3px solid $bball-orange;
+  /* border-right: 3px solid $bball-orange; */
 }
 
 .game-rules-panel {
-  margin: 10px;
-  padding: 0 20px 20px 20px;
+  margin: 0 10px;
+  padding: 0 20px;
 
   .rules-panel-header {
-    text-align: center;
+    padding: 10px;
+    margin: 20px 0;
+    border-bottom: 5px solid #777;
+    /* text-align: center; */
   }
 
   .game-num {
-    color: #777;
+    color: $bball-orange;
+  }
+
+  .rules-section {
+    padding: 10px;
+  }
+
+}
+
+.big-winner {
+  margin: 0 10px 30px 10px;
+  padding: 0 20px;
+
+  .big-winner-header {
+    border-bottom: 5px solid #777;
+    margin-bottom: 20px;
+    color: $bball-orange;
   }
 }
+
