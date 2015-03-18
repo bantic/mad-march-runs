@@ -6,20 +6,48 @@
 
 <ol>
 {{#each model as |round|}}
-  <li>
+  <li class='round'>
     {{round.name}}
     <ul>
       {{#each round.games as |game|}}
       <li>
-        {{#with game.teams.firstObject as |team|}}
-          {{team-logo team=team size="tiny"}}
-          {{team.name}}
-        {{/with}}
-        vs
-        {{#with game.teams.lastObject as |team|}}
-          {{team-logo team=team size="tiny"}}
-          {{team.name}}
-        {{/with}}
+        <div class='matchup'>
+          <div class='team'>
+            {{#with game.teams.firstObject as |team|}}
+              {{team-logo team=team size="tiny"}}
+              {{team.name}}
+            {{/with}}
+          </div>
+          vs
+          <div class='team'>
+            {{#with game.teams.lastObject as |team|}}
+              {{team-logo team=team size="tiny"}}
+              {{team.name}}
+            {{/with}}
+          </div>
+
+          {{#if game.isSelected}}
+            <div class='pick-winner'>
+              {{#with game.teams.firstObject as |team|}}
+                <button {{action 'selectWinner' game team}}
+                  class='btn select-winner'>
+                  Select {{team.name}}
+                </button>
+              {{/with}}
+              or
+              {{#with game.teams.lastObject as |team|}}
+                <button {{action 'selectWinner' game team}}
+                  class='btn select-winner'>
+                  Select {{team.name}}
+                </button>
+              {{/with}}
+            </div>
+          {{else}}
+            <button {{action 'selectMatchup' game}} class='btn select-matchup'>
+              Select Matchup
+            </button>
+          {{/if}}
+        </div>
       </li>
       {{/each}}
     </ul>
