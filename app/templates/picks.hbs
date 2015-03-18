@@ -3,11 +3,18 @@
 <h3>Your picks</h3>
 <ul class="picks">
 {{#each session.currentUser.picks as |pick|}}
-  <li class='pick'>Round: <b>{{pick.round.name}}</b>: You picked {{pick.team.name}}</li>
+  <li class='pick'>Round: <b>{{pick.round.name}}</b>:
+    You picked {{pick.team.name}} ({{pick.team.seed}})</li>
 {{else}}
   <li class='empty'>You have not selected any picks yet.</li>
 {{/each}}
 </ul>
+
+<p>
+  For each of the available rounds below, click "Select Matchup" next to the
+  game you want to pick, then click the button to lock in the team you think
+  will be the winner.
+</p>
 
 <h3>Rounds</h3>
 
@@ -26,19 +33,19 @@
       {{else}}
         <ul>
           {{#each roundObj.round.games as |game|}}
-            <li>
+            <li class='game'>
               <div class='matchup'>
                 <div class='team'>
                   {{#with game.teams.firstObject as |team|}}
                     {{team-logo team=team size="tiny"}}
-                    {{team.name}}
+                    {{team.name}} ({{team.seed}})
                   {{/with}}
                 </div>
                 vs
                 <div class='team'>
                   {{#with game.teams.lastObject as |team|}}
                     {{team-logo team=team size="tiny"}}
-                    {{team.name}}
+                    {{team.name}} ({{team.seed}})
                   {{/with}}
                 </div>
 
@@ -47,14 +54,14 @@
                     {{#with game.teams.firstObject as |team|}}
                       <button {{action 'selectWinner' game team}}
                         class='btn select-winner'>
-                        Select {{team.name}}
+                        Lock my pick for: {{team.name}}
                       </button>
                     {{/with}}
                     or
                     {{#with game.teams.lastObject as |team|}}
                       <button {{action 'selectWinner' game team}}
                         class='btn select-winner'>
-                        Select {{team.name}}
+                        Lock my pick for: {{team.name}}
                       </button>
                     {{/with}}
                   </div>

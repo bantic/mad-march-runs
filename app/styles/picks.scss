@@ -1,0 +1,9 @@
+.matchup {
+  .team, .pick-winner {
+    display: inline-block;
+  }
+}
+
+li.round {
+  li.game { margin: 0.5em 0; }
+}
