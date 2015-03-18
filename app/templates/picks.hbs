@@ -1,4 +1,4 @@
-<h2>Picks</h2>
+<h2>Daily Survivor Picks</h2>
 
 <h3>Your picks</h3>
 <ul class="picks">
@@ -13,7 +13,13 @@
 <p>
   For each of the available rounds below, click "Select Matchup" next to the
   game you want to pick, then click the button to lock in the team you think
-  will be the winner.
+  will <em>beat the spread</em>. The spread is determined by the difference
+  in the team seeds. Read the {{'link-to' 'full rules' 'rules'}} for more info.
+</p>
+
+<p>
+  Once you click the "lock in my pick" button, your pick will be locked in for that
+  day and <em>cannot be changed</em>.
 </p>
 
 <h3>Rounds</h3>
@@ -48,20 +54,23 @@
                     {{team.name}} ({{team.seed}})
                   {{/with}}
                 </div>
+                <div class='spread'>
+                  Spread: {{calculate-spread game.teams}}
+                </div>
 
                 {{#if game.isSelected}}
                   <div class='pick-winner'>
                     {{#with game.teams.firstObject as |team|}}
                       <button {{action 'selectWinner' game team}}
                         class='btn select-winner'>
-                        Lock my pick for: {{team.name}}
+                        Lock in: {{team.name}} to beat the spread
                       </button>
                     {{/with}}
                     or
                     {{#with game.teams.lastObject as |team|}}
                       <button {{action 'selectWinner' game team}}
                         class='btn select-winner'>
-                        Lock my pick for: {{team.name}}
+                        Lock in: {{team.name}} to beat the spread
                       </button>
                     {{/with}}
                   </div>

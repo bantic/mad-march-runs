@@ -10,8 +10,10 @@
     <nav>
       <ul class="nav navbar-nav">
         <li>{{link-to 'Rules & Regulations' 'rules'}}</li>
-        <li>{{link-to 'March Runs' 'select-teams'}}</li>
-        <li>{{link-to 'Daily Survivor' 'picks'}}</li>
+        {{#if session.isAuthenticated}}
+          <li>{{link-to 'March Runs' 'select-teams'}}</li>
+          <li>{{link-to 'Daily Survivor' 'picks'}}</li>
+        {{/if}}
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {{#if session.isAuthenticated}}

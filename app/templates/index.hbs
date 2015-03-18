@@ -6,7 +6,10 @@
   <p>Add some action to your bracket!</p>
 
   {{#if session.isAuthenticated}}
-    <p>Now that you're logged in, {{link-to 'select your teams' 'select-teams'}}.</p>
+    <p>Now that you're logged in,
+      {{link-to 'select your runs teams' 'select-teams'}} and
+      {{link-to 'make your daily picks' 'picks'}}.
+    </p>
   {{else}}
     <p>{{link-to 'Log in' 'login'}} to your account or {{link-to 'sign up' 'sign-up'}} to get started.</p>
   {{/if}}
