@@ -5,6 +5,12 @@ export default Ember.Route.extend({
     return this.store.find('round');
   },
 
+  afterModel() {
+    return Ember.RSVP.hash({
+      picks: this.get('session.currentUser.picks')
+    });
+  },
+
   actions: {
     selectMatchup(game, round) {
       // unselect all other games

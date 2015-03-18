@@ -1,11 +1,9 @@
 <h2>Picks</h2>
 
-<p>You will be able to select your daily picks here soon.</p>
-
 <h3>Your picks</h3>
 <ul class="picks">
-{{#each user.picks as |pick|}}
-  <li class='pick'>Round: <b>{{pick.game.round.name}}</b>: You picked {{pick.team.name}}</li>
+{{#each session.currentUser.picks as |pick|}}
+  <li class='pick'>Round: <b>{{pick.round.name}}</b>: You picked {{pick.team.name}}</li>
 {{else}}
   <li class='empty'>You have not selected any picks yet.</li>
 {{/each}}
@@ -14,52 +12,63 @@
 <h3>Rounds</h3>
 
 <ol>
-{{#each model as |round|}}
-  <li class='round'>
-    {{round.name}}
-    <ul>
-      {{#each round.games as |game|}}
-      <li>
-        <div class='matchup'>
-          <div class='team'>
-            {{#with game.teams.firstObject as |team|}}
-              {{team-logo team=team size="tiny"}}
-              {{team.name}}
-            {{/with}}
-          </div>
-          vs
-          <div class='team'>
-            {{#with game.teams.lastObject as |team|}}
-              {{team-logo team=team size="tiny"}}
-              {{team.name}}
-            {{/with}}
-          </div>
+{{#each roundsWithPicks as |roundObj|}}
+  {{#if roundObj.round.isLocked}}
+    <li class='round locked'>
+      <b>{{roundObj.round.name}}</b> (locked)
+    </li>
+  {{else}}
+    <li class='round'>
+      {{roundObj.round.name}}
 
-          {{#if game.isSelected}}
-            <div class='pick-winner'>
-              {{#with game.teams.firstObject as |team|}}
-                <button {{action 'selectWinner' game team}}
-                  class='btn select-winner'>
-                  Select {{team.name}}
-                </button>
-              {{/with}}
-              or
-              {{#with game.teams.lastObject as |team|}}
-                <button {{action 'selectWinner' game team}}
-                  class='btn select-winner'>
-                  Select {{team.name}}
-                </button>
-              {{/with}}
-            </div>
-          {{else}}
-            <button {{action 'selectMatchup' game round}} class='btn select-matchup'>
-              Select Matchup
-            </button>
-          {{/if}}
-        </div>
-      </li>
-      {{/each}}
-    </ul>
-  </li>
+      {{#if roundObj.pick}}
+        Your pick: {{roundObj.pick.team.name}}.
+      {{else}}
+        <ul>
+          {{#each roundObj.round.games as |game|}}
+            <li>
+              <div class='matchup'>
+                <div class='team'>
+                  {{#with game.teams.firstObject as |team|}}
+                    {{team-logo team=team size="tiny"}}
+                    {{team.name}}
+                  {{/with}}
+                </div>
+                vs
+                <div class='team'>
+                  {{#with game.teams.lastObject as |team|}}
+                    {{team-logo team=team size="tiny"}}
+                    {{team.name}}
+                  {{/with}}
+                </div>
+
+                {{#if game.isSelected}}
+                  <div class='pick-winner'>
+                    {{#with game.teams.firstObject as |team|}}
+                      <button {{action 'selectWinner' game team}}
+                        class='btn select-winner'>
+                        Select {{team.name}}
+                      </button>
+                    {{/with}}
+                    or
+                    {{#with game.teams.lastObject as |team|}}
+                      <button {{action 'selectWinner' game team}}
+                        class='btn select-winner'>
+                        Select {{team.name}}
+                      </button>
+                    {{/with}}
+                  </div>
+                {{else}}
+                  <button {{action 'selectMatchup' game roundObj.round}} class='btn select-matchup'>
+                    Select Matchup
+                  </button>
+                {{/if}}
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+      {{/if}}
+    </li>
+  {{/if}}
 {{/each}}
 </ol>

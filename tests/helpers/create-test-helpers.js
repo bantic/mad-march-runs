@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { stubRequest } from './fake-server';
 
 export default function() {
   Ember.Test.registerAsyncHelper('signIn', function(app, userData){
@@ -11,15 +12,22 @@ export default function() {
 
     userData = Ember.$.extend(true, defaultUserData, userData);
 
-    let session = app.__container__.lookup('torii:session');
-    let sm = session.get('stateMachine');
-
-    Ember.run(function(){
-      let store = app.__container__.lookup('store:main');
-      let user = store.push('user', userData);
-
-      sm.transitionTo('authenticated');
-      session.set('content.currentUser', user);
+    stubRequest('get', 'api/users/:id', function(request){
+      return this.success({user: userData});
     });
+
+    stubRequest('post', 'api/tokens', function(request){
+      return this.success({
+        id: 'token',
+        token: 'abcdef',
+        email: userData.email,
+        user: userData.id
+      });
+    });
+
+    visit('/login');
+    fillIn('input[name="email"]', userData.email);
+    fillIn('input[name="password"]', 'somepassword');
+    click('.btn.log-in');
   });
 }

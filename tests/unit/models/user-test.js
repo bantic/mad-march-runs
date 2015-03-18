@@ -7,7 +7,7 @@ import { stubRequest } from '../../helpers/fake-server';
 
 moduleForModel('user', {
   // Specify the other units that are required for this test.
-  needs: ['model:team','adapter:application','serializer:user','model:pick','model:game']
+  needs: ['model:team','adapter:application','serializer:user','model:pick','model:game','model:round']
 });
 
 test('serializes team ids', function(assert) {
