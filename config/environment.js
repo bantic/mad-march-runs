@@ -1,6 +1,6 @@
 /* jshint node: true */
 
-var tournamentStartTime = new Date(2015, 2, 19, 11, 15).getTime();
+var tournamentStartTime = new Date(2015, 2, 19, 11, 45).getTime();
 
 module.exports = function(environment) {
   var ENV = {
