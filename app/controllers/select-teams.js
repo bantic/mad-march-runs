@@ -1,7 +1,11 @@
 import Ember from 'ember';
 import { MAX_TEAMS } from '../models/user';
+import config from '../config/environment';
 
 export default Ember.Controller.extend({
+  tournamentStartTime: config.tournamentStartTime,
+  tournamentStartedService: Ember.inject.service('tournament-started'),
+
   user: Ember.computed.alias('session.currentUser'),
   userTeams: Ember.computed.alias('user.teams'),
 

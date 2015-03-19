@@ -44,6 +44,8 @@
       {{#if roundObj.pick}}
         Your pick: {{roundObj.pick.team.name}}.
       {{else}}
+        (Closes in {{countdown-timer time=roundObj.round.startsAtMs
+                                     showSeconds=false}})
         <ul>
           {{#each roundObj.round.games as |game|}}
             <li class='game'>
@@ -80,7 +82,16 @@
                         Lock in: {{team.name}} to win
                       </button>
                     {{/with}}
+
+                    <button {{action 'deselectMatchup' game}} class='btn cancel'>
+                      Cancel
+                    </button>
                   </div>
+                  {{#if errorSavingPick}}
+                    <div class='error'>
+                      {{errorSavingPick}}
+                    </div>
+                  {{/if}}
                 {{else}}
                   <button {{action 'selectMatchup' game roundObj.round}} class='btn select-matchup'>
                     Select Matchup

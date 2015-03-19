@@ -52,26 +52,34 @@
 
 <hr>
 
-<div class="teams">
-  <h2>Select {{maxTeams}} teams:</h2>
+{{countdown-timer time=tournamentStartTime}} until team selections are <em>locked</em>.
 
-  {{#each groupedTeams as |group|}}
-    <h3>{{group.region}}</h3>
-    <div class="region">
-      {{#each group.teams as |team|}}
-        <a {{action 'toggleSelect' team}}
-           class="team {{if (includes-item team userTeams) "selected"}}">
+<hr>
 
-          {{team-logo team=team size="small"}}
+{{#unless tournamentStartedService.started}}
+  <div class="teams">
+    <h2>Select {{maxTeams}} teams:</h2>
 
-          <div>
-            <span class="name">{{team.name}}</span>
-            <span class='seed'>({{team.seed}})</span>
-          </div>
+    {{#each groupedTeams as |group|}}
+      <h3>{{group.region}}</h3>
+      <div class="region">
+        {{#each group.teams as |team|}}
+          <a {{action 'toggleSelect' team}}
+             class="team {{if (includes-item team userTeams) "selected"}}">
 
-        </a>
-      {{/each}}
-    </div>
+            {{team-logo team=team size="small"}}
 
-  {{/each}}
-</div>
+            <div>
+              <span class="name">{{team.name}}</span>
+              <span class='seed'>({{team.seed}})</span>
+            </div>
+
+          </a>
+        {{/each}}
+      </div>
+
+    {{/each}}
+  </div>
+{{else}}
+  <h2>Selections are locked!</h2>
+{{/unless}}

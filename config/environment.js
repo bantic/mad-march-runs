@@ -1,5 +1,7 @@
 /* jshint node: true */
 
+var tournamentStartTime = new Date(2015, 2, 19, 11, 15).getTime();
+
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'mad-march-runs',
@@ -32,7 +34,9 @@ module.exports = function(environment) {
     apiHost: 'http://localhost:3000',
     apiNamespace: 'api',
     tokenPath: 'tokens',
-    authTokenKey: 'mmr-auth-token'
+    authTokenKey: 'mmr-auth-token',
+
+    tournamentStartTime: tournamentStartTime
   };
 
   if (environment === 'development') {

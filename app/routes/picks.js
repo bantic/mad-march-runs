@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 
 export default Ember.Route.extend({
   beforeModel() {
@@ -17,8 +18,18 @@ export default Ember.Route.extend({
     });
   },
 
+  resetController(controller){
+    controller.set('errorSavingPick', false);
+  },
+
   actions: {
+    deselectMatchup(game) {
+      game.set('isSelected', false);
+      this.controller.set('errorSavingPick', false);
+    },
+
     selectMatchup(game, round) {
+      this.controller.set('errorSavingPick', false);
       // unselect all other games
       round.get('games').then( (games) => {
         games.forEach( (_game) => {
@@ -34,7 +45,24 @@ export default Ember.Route.extend({
       pick.setProperties({ user, game, team });
 
       this.controller.set('isSavingPick', true);
-      pick.save().finally( () => {
+      this.controller.set('errorSavingPick', false);
+
+      pick.save().catch( (e) => {
+        let errorMessage = `There was an error: ${e.message}`;
+        if (e instanceof DS.InvalidError) {
+          let messages = [];
+          pick.get('errors').forEach( (error) => {
+            if (error.attribute === 'base') {
+              messages.push(error.message);
+            } else {
+              messages.push(`${error.attribute}: ${error.message}`);
+            }
+          });
+          errorMessage = `There were some errors: ${messages.join(', ')}`;
+        }
+        this.controller.set('errorSavingPick', errorMessage);
+        pick.destroy();
+      }).finally( () => {
         this.controller.set('isSavingPick', false);
       });
     }
