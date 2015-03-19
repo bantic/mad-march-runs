@@ -158,13 +158,3 @@ test('visiting /select-teams with none selected and selecting', function(assert)
                  'updates with team id');
   });
 });
-
-test('visiting /select-teams when user cannot select redirects to index', function(assert){
-  let userData = makeUser({canSelectTeams:false});
-
-  signIn(userData);
-  visit('/select-teams');
-  andThen( () => {
-    assert.equal(currentPath(), 'index');
-  });
-});

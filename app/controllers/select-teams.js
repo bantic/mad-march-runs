@@ -5,6 +5,7 @@ import config from '../config/environment';
 export default Ember.Controller.extend({
   tournamentStartTime: config.tournamentStartTime,
   tournamentStartedService: Ember.inject.service('tournament-started'),
+  tournamentStarted: Ember.computed.reads('tournamentStartedService.started'),
 
   user: Ember.computed.alias('session.currentUser'),
   userTeams: Ember.computed.alias('user.teams'),
@@ -60,6 +61,8 @@ export default Ember.Controller.extend({
 
   actions: {
     toggleSelect(team) {
+      if (this.get('tournamendStarted')) { return; }
+
       let changed = false;
 
       let user = this.get('user');
@@ -75,6 +78,8 @@ export default Ember.Controller.extend({
     },
 
     saveSelections(){
+      if (this.get('tournamendStarted')) { return; }
+
       let user = this.get('user');
       this.set('isSavingSelections', true);
       user.save().then( () => {

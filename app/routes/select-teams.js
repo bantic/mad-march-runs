@@ -23,8 +23,5 @@ export default Ember.Route.extend({
     if (!this.get('session.isAuthenticated')) {
       this.transitionTo('index');
     }
-    if (!this.get('session.currentUser.canSelectTeams')) {
-      this.transitionTo('index');
-    }
   }
 });
