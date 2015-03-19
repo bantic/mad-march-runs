@@ -61,7 +61,7 @@ export default Ember.Controller.extend({
 
   actions: {
     toggleSelect(team) {
-      if (this.get('tournamendStarted')) { return; }
+      if (this.get('tournamentStarted')) { return; }
 
       let changed = false;
 
@@ -78,7 +78,7 @@ export default Ember.Controller.extend({
     },
 
     saveSelections(){
-      if (this.get('tournamendStarted')) { return; }
+      if (this.get('tournamentStarted')) { return; }
 
       let user = this.get('user');
       this.set('isSavingSelections', true);
