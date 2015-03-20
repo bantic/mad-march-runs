@@ -145,7 +145,7 @@ footer {
 }
 
 .team-logo {
-  width:: 150px;
+  width: 150px;
   &.small {
     width: 75px;
   }
@@ -157,6 +157,11 @@ footer {
   }
 }
 
+.team-name {
+  &.eliminated {
+    text-decoration: line-through;
+  }
+}
 
 .hero {
   text-align: center;

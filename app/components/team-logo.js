@@ -6,6 +6,12 @@ export default Ember.Component.extend({
   team: null,
   tagName: 'span',
   size: null,
-  imgClass: Ember.computed.alias('size'),
+  imgClass: function(){
+    let size = this.get('size');
+    if (size) { return size; }
+
+    return 'medium';
+  }.property('size'),
+
   src: Ember.computed.alias('team.logoUrl')
 });

@@ -7,8 +7,18 @@
 
   {{#if session.isAuthenticated}}
     <p>Now that you're logged in,
-      {{link-to 'select your runs teams' 'select-teams'}} and
-      {{link-to 'make your daily picks' 'picks'}}.
+      {{link-to 'Make your daily picks' 'picks'}}.
+    </p>
+
+    <p>
+      Your runs teams:
+      <ul>
+        {{#each session.currentUser.teams as |team|}}
+          <li>{{team-name logo=true size='tiny' team=team}}</li>
+        {{else}}
+          <li>No teams picked.</li>
+        {{/each}}
+      </ul>
     </p>
   {{else}}
     <p>{{link-to 'Log in' 'login'}} to your account or {{link-to 'sign up' 'sign-up'}} to get started.</p>

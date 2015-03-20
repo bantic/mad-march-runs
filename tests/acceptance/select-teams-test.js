@@ -28,6 +28,10 @@ module('Acceptance: SelectTeams', {
     stubRequest('get', 'api/teams', function(request){
       return this.success({teams});
     });
+    stubRequest('get', 'api/teams/:team_id', function(request){
+      let teamId = parseInt(request.params.team_id, 10);
+      return this.success({team: teams[ teamId - 1 ]});
+    });
   },
 
   afterEach: function() {
