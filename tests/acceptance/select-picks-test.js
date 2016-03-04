@@ -3,8 +3,8 @@ import {
   module,
   test
 } from 'qunit';
-import { stubRequest } from '../helpers/fake-server';
 import startApp from 'mad-march-runs/tests/helpers/start-app';
+import { stubRequest } from 'ember-cli-fake-server';
 
 let roundId = 0;
 let makeRound = (roundData) => {

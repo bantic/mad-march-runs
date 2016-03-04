@@ -4,7 +4,7 @@ import {
   test
 } from 'qunit';
 import startApp from 'mad-march-runs/tests/helpers/start-app';
-import { stubRequest } from '../helpers/fake-server';
+import { stubRequest } from 'ember-cli-fake-server';
 
 var application;
 

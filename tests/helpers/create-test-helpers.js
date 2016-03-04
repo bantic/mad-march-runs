@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { stubRequest } from './fake-server';
+import { stubRequest } from 'ember-cli-fake-server';
 
 export default function() {
   Ember.Test.registerAsyncHelper('signIn', function(app, userData){
