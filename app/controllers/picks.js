@@ -2,8 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   roundsWithPicks: function(){
-    let rounds = this.get('model');
-    let picks = this.get('session.currentUser.picks');
+    let rounds = this.get('model') || [];
+    let picks = this.get('session.currentUser.picks') || [];
 
     let result = [];
 
