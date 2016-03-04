@@ -15,21 +15,25 @@ export default Ember.Component.extend({
   minutes: 0,
   seconds: 0,
 
-  startClock: function(){
+  didInsertElement() {
+    this._super(...arguments);
     this.started = true;
     if (config.environment !== 'test') {
       this.tick();
     }
-  }.on('didInsertElement'),
+  },
 
-  stopClock: function(){
+  willDestroyElement() {
+    this._super(...arguments);
     if (this.timer) {
       Ember.run.cancel(this.timer);
+      this.timer = null;
     }
-  }.on('willDestroyElement'),
+  },
 
   tick: function(){
     if (!this.started) { return; }
+    if (this.isDestroyed) { return; }
 
     let time = this.get('time');
     if (!time) { return; }

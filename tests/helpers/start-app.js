@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import registerAcceptanceTestHelpers from './201-created/register-acceptance-test-helpers';
 import Application from '../../app';
-import Router from '../../router';
 import config from '../../config/environment';
 import createTestHelpers from './create-test-helpers';
 
